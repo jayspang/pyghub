@@ -8,6 +8,8 @@ downloads
 eggs
 parts
 src/*.egg-info
-lib
+Lib/
+Scripts/
 lib64
+pyvenv.cfg
 *.pyc

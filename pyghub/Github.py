@@ -25,6 +25,7 @@ class Github:
             "Authorization": "token %s" % self.api_token
         }
 
+
     def get_repos(self) -> str:
         """
         Gets a list of repos available to the current user.
@@ -45,6 +46,7 @@ class Github:
             return req.content
 
         raise Exception("Failed to get repos")
+
 
     def get_repo(self, owner: str, repo_name: str) -> str:
         """
