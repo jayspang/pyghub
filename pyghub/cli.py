@@ -2,14 +2,30 @@
 Exposes a command line interface for the Github module.
 """
 import argparse
-import json
-from pyghub.github import Github
+import sys
+from typing import Callable, List
+import pyghub.commands.get_repo
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--api-token', help='Github.com API token')
+#  Collect our subparsers from each file in commands/
+command_parser_map: List[Callable[[], None]] = [
+    pyghub.commands.get_repo.register_subparser
+]
+
+def main():
+    #  First, collect global arguments (just the API token really)
+    parser = argparse.ArgumentParser(description="Command Line Interface for working with Github's API.")
+    parser.add_argument("--api-token", help="Github.com API token")
+
+    #  Now, iterate our commands and add each one's subparser
+    subparsers = parser.add_subparsers()
+    for command_parser in command_parser_map:
+        command_parser(subparsers)
+
     args = parser.parse_args()
 
-    gh = Github(args.api_token)
-    parsed = json.loads(gh.get_repos())
-    print(json.dumps(parsed, indent=4, sort_keys=True))
+    #  Execute the desired command and exit with its return code
+    exit_code = args.func(args)
+    sys.exit(exit_code)
+
+if __name__ == "__main__":
+    main()
