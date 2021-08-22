@@ -2,7 +2,7 @@ import mock
 import pytest
 import unittest
 
-from pyghub.github import *
+from pyghub.github import Github
 
 class TestGithub(unittest.TestCase):
     def setup(self):

@@ -4,15 +4,30 @@ Pybhub is a Python library for interfacing with the [Github API](https://docs.gi
 
 
 ## Prerequisites
-1. Python 3.* (tested on 3.6 and 3.9)
-2. [Pip](https://pip.pypa.io/en/stable/)
-2. Windows (tested in Windows 11)
-3. Linux (tested on Ubuntu via [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10))
+1. Python 3.* (tested on 3.6 and 3.9) with [pip](https://pip.pypa.io/en/stable/).
+1. Windows (tested on Windows 11)
+1. Linux (tested on Ubuntu via [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10))
 
 ## Installation
+Use [virtualenv](https://docs.python.org/3/tutorial/venv.html) - Optional, but recommended:
+```bash
+pip install virtualenv
+python -m virtualenv pyghub
+pyghub\Scripts\activate.cmd
+```
+Then...
 
 ```bash
 pip install -r requirements.txt
+```
+
+## Usage
+```python
+from pyghub.Github import Github
+
+#  Lists Events
+gh = Github("api_key")
+gh.GetEvents()
 ```
 
 ## Testing
@@ -23,20 +38,8 @@ pip install -r dev-requirements.txt
 #  Linting
 python -m pylint pyghub
 
-#  Unit tests
-python -m pytest
-
-#  With code coverage
-python -m pytest --cov=.
-```
-
-## Usage
-```python
-from pyghub.Github import Github
-
-#  Lists Events
-gh = Github("api_key")
-gh.GetEvents()
+#  Unit tests (with code coverage)
+python -m pytest --cov
 ```
 
 ## Contributing
