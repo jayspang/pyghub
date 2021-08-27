@@ -1,5 +1,5 @@
 """
-Unit tests for Github.py
+Unit tests for github.py
 """
 import mock
 import os
