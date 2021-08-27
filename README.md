@@ -9,11 +9,11 @@ Pybhub is a Python library for interfacing with the [Github API](https://docs.gi
 1. Linux (tested on Ubuntu via [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10))
 
 ## Installation
-Use [virtualenv](https://docs.python.org/3/tutorial/venv.html) - Optional, but recommended:
+Use [virtualenv](https://docs.python.org/3/tutorial/venv.html). Optional, but recommended:
 ```bash
 pip install virtualenv
 python -m virtualenv pyghub
-pyghub\Scripts\activate.cmd
+pyghub\Scripts\activate.bat  # `source ./pyghub/scripts/activate` for Linux
 ```
 Then...
 
@@ -23,12 +23,23 @@ pip install -r requirements.txt
 
 ## Usage
 ```python
-from pyghub.Github import Github
+from pyghub.providers.github import Github
+from pyghub.providers.git import Git
 
-#  Lists Events
+# Get Repo information for https://github.com/microsoft/terminal
 gh = Github("api_key")
-gh.GetEvents()
+info = gh.get_repo("microsoft", "terminal")
+
+# Clone the same repo to c:\git\terminal
+g = Git()
+g.clone_repo("https://github.com/microsoft/terminal", "c:\\git\\terminal")
+
+# Pull, push
+g.pull("c:\\git\\terminal", "origin", "main")
+g.push("https://username:api_token@github.com/microsoft/terminal", "origin", "main") # note the credentials required for pushing)
+
 ```
+
 
 ## Testing
 ```bash
