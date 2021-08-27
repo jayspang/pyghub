@@ -6,7 +6,7 @@ import os
 import pytest
 import unittest
 
-from pyghub.github import Github # pylint: disable=import-error
+from pyghub.providers.github import Github # pylint: disable=import-error
 
 class TestConstructor(unittest.TestCase):
     """

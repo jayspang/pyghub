@@ -1,17 +1,15 @@
 """
-CLI command for getting repository information.
+CLI command for pulling from a remote repo.
 """
 import argparse
-import json
-from pyghub.providers.github import Github # pylint: disable=import-error
+from pyghub.providers.git import Git # pylint: disable=import-error
 
 
 def execute_command(args: argparse.Namespace) -> int:
     """
     Executes the command described in this file.
 
-    This particular command hits Github's /repo URL to retrieve
-    repo information. It's then pretty-printed to the terminal.
+    This particular command pulls from a remote repo
 
     Args:
         args (as in, the arguments from this command's subparser)
@@ -19,9 +17,8 @@ def execute_command(args: argparse.Namespace) -> int:
     Returns:
         return code (0 for success, 1 for failure)
     """
-    gh = Github(args.api_token)
-    parsed = json.loads(gh.get_repo(args.owner, args.repo))
-    print(json.dumps(parsed, indent=4, sort_keys=True))
+    g = Git()
+    g.pull(args.repo_path, args.remote, args.branch)
     return 0
 
 
@@ -36,15 +33,19 @@ def register_subparser(subparser) -> None:
         None
     """
     parser = subparser.add_parser(
-        "get_repo", help="Get repository information"
+        "pull", help="Pull from a remote repository"
     )
 
     parser.add_argument(
-        "-o", "--owner", help="Ower of the repository."
+        "-r", "--repo-path", help="Path to local git repository."
     )
 
     parser.add_argument(
-        "-r", "--repo", help="Repository name."
+        "-m", "--remote", help="Remote name to pull from."
+    )
+
+    parser.add_argument(
+        "-b", "--branch", help="Branch name to pull from."
     )
 
     parser.set_defaults(func=execute_command)

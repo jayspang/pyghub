@@ -5,10 +5,18 @@ import argparse
 import sys
 from typing import Callable, List
 import pyghub.commands.get_repo
+import pyghub.commands.commit
+import pyghub.commands.clone_repo
+import pyghub.commands.pull
+
+
 
 #  Collect our subparsers from each file in commands/
 command_parser_map: List[Callable[[], None]] = [
-    pyghub.commands.get_repo.register_subparser
+    pyghub.commands.get_repo.register_subparser,
+    pyghub.commands.clone_repo.register_subparser,
+    pyghub.commands.commit.register_subparser,
+    pyghub.commands.pull.register_subparser,
 ]
 
 def main():

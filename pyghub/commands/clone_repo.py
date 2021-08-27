@@ -1,17 +1,15 @@
 """
-CLI command for getting repository information.
+CLI command for Cloning a remote repository.
 """
 import argparse
-import json
-from pyghub.providers.github import Github # pylint: disable=import-error
+from pyghub.providers.git import Git # pylint: disable=import-error
 
 
 def execute_command(args: argparse.Namespace) -> int:
     """
     Executes the command described in this file.
 
-    This particular command hits Github's /repo URL to retrieve
-    repo information. It's then pretty-printed to the terminal.
+    This particular command uses PyGithub to clone a remote repo.
 
     Args:
         args (as in, the arguments from this command's subparser)
@@ -19,9 +17,8 @@ def execute_command(args: argparse.Namespace) -> int:
     Returns:
         return code (0 for success, 1 for failure)
     """
-    gh = Github(args.api_token)
-    parsed = json.loads(gh.get_repo(args.owner, args.repo))
-    print(json.dumps(parsed, indent=4, sort_keys=True))
+    g = Git()
+    g.clone_repo(args.repo_url, args.path)
     return 0
 
 
@@ -36,15 +33,15 @@ def register_subparser(subparser) -> None:
         None
     """
     parser = subparser.add_parser(
-        "get_repo", help="Get repository information"
+        "clone_repo", help="Get repository information"
     )
 
     parser.add_argument(
-        "-o", "--owner", help="Ower of the repository."
+        "-r", "--repo-url", help="Remote repository URL (either https or SSH)."
     )
 
     parser.add_argument(
-        "-r", "--repo", help="Repository name."
+        "-p", "--path", help="Local path to clone the repository into."
     )
 
     parser.set_defaults(func=execute_command)

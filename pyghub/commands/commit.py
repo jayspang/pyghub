@@ -1,17 +1,16 @@
 """
-CLI command for getting repository information.
+CLI command for committing to a local.
 """
 import argparse
-import json
-from pyghub.providers.github import Github # pylint: disable=import-error
+from pyghub.providers.git import Git # pylint: disable=import-error
 
 
 def execute_command(args: argparse.Namespace) -> int:
     """
     Executes the command described in this file.
 
-    This particular command hits Github's /repo URL to retrieve
-    repo information. It's then pretty-printed to the terminal.
+    This particular command uses PyGithub to commit all changes
+    to a local repo.
 
     Args:
         args (as in, the arguments from this command's subparser)
@@ -19,9 +18,8 @@ def execute_command(args: argparse.Namespace) -> int:
     Returns:
         return code (0 for success, 1 for failure)
     """
-    gh = Github(args.api_token)
-    parsed = json.loads(gh.get_repo(args.owner, args.repo))
-    print(json.dumps(parsed, indent=4, sort_keys=True))
+    g = Git()
+    g.commit(args.repo_path, args.commit_message)
     return 0
 
 
@@ -36,15 +34,15 @@ def register_subparser(subparser) -> None:
         None
     """
     parser = subparser.add_parser(
-        "get_repo", help="Get repository information"
+        "commit", help="Commit to a repository."
     )
 
     parser.add_argument(
-        "-o", "--owner", help="Ower of the repository."
+        "-r", "--repo-path", help="Path to local git repository."
     )
 
     parser.add_argument(
-        "-r", "--repo", help="Repository name."
+        "-m", "--commit-message", help="Commit message."
     )
 
     parser.set_defaults(func=execute_command)
