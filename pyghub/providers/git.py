@@ -12,7 +12,7 @@ class Git:
     """
     Main class for interfacing with Git
     """
-    def __init__(self, api_token: str=None) -> None:
+    def __init__(self, username: str=None, api_token: str=None) -> None:
         """Inits Git"""
         pass
 
@@ -120,7 +120,7 @@ class Git:
         try:
             repo = Repo.init(repo_path)
             if branch:
-                repo.remotes[remote].pull(branch)
+                repo.remotes[remote].push(branch)
             else:
                 repo.remotes[remote].push()
         except GitCommandError as e:

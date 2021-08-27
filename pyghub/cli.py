@@ -8,6 +8,7 @@ import pyghub.commands.get_repo
 import pyghub.commands.commit
 import pyghub.commands.clone_repo
 import pyghub.commands.pull
+import pyghub.commands.push
 
 
 
@@ -17,6 +18,7 @@ command_parser_map: List[Callable[[], None]] = [
     pyghub.commands.clone_repo.register_subparser,
     pyghub.commands.commit.register_subparser,
     pyghub.commands.pull.register_subparser,
+    pyghub.commands.push.register_subparser,
 ]
 
 def main():
