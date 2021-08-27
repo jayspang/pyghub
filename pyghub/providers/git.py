@@ -36,7 +36,10 @@ class Git:
         if os.path.exists(path):
             raise Exception("Destination path already exists. Cannot clone repository. ({})".format(path))
 
-        return Repo.clone_from(repo_url, path)
+        try:
+            return Repo.clone_from(repo_url, path)
+        except GitCommandError as e:
+            raise Exception("Failed to clone") from e
 
     def commit(self, repo_path: str, commit_message) -> None:
         """
@@ -55,9 +58,12 @@ class Git:
         if not os.path.exists(repo_path):
             raise Exception("Unable to find a git repository at the specified path. ({})".format(repo_path))
 
-        repo = Repo.init(repo_path)
-        repo.git.add(".")
-        repo.index.commit(commit_message)
+        try:
+            repo = Repo.init(repo_path)
+            repo.git.add(".")
+            repo.index.commit(commit_message)
+        except GitCommandError as e:
+            raise Exception("Failed to commit") from e
 
         return 0
 
@@ -67,7 +73,7 @@ class Git:
         be specified, otherwise defaults to the equiv of 'git pull'.
 
         Args:
-            repo_path: Local path to the repository to commit to.
+            repo_path: Local path to the repository.
             remote (optional): remote repostitory
             branch: branch name
 
@@ -87,5 +93,37 @@ class Git:
             else:
                 repo.remotes[remote].pull()
         except GitCommandError as e:
-            raise Exception("Failed to pull: {}".format(e))
+            raise Exception("Failed to pull") from e
+
+        return 0
+
+
+    def push(self, repo_path: str, remote: str = "origin", branch: str = None) -> None:
+        """
+        Pushes all changes to a remote repository. Remote and Branch can
+        be specified, otherwise defaults to the equiv of 'git push'.
+
+        Args:
+            repo_path: Local path to the repository.
+            remote (optional): remote repostitory
+            branch: branch name
+
+        Returns:
+            None
+
+        Raises:
+            Exception - Failed to push
+        """
+        if not os.path.exists(repo_path):
+            raise Exception("Unable to find a git repository at the specified path. ({})".format(repo_path))
+
+        try:
+            repo = Repo.init(repo_path)
+            if branch:
+                repo.remotes[remote].pull(branch)
+            else:
+                repo.remotes[remote].push()
+        except GitCommandError as e:
+            raise Exception("Failed to push") from e
+
         return 0
