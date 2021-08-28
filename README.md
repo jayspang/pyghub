@@ -13,12 +13,15 @@ Use [virtualenv](https://docs.python.org/3/tutorial/venv.html). Optional, but re
 ```bash
 pip install virtualenv
 python -m virtualenv pyghub
-pyghub\Scripts\activate.bat  # `source ./pyghub/scripts/activate` for Linux
+pyghub\Scripts\activate.bat  # `source ./pyghub/bin/activate` for Linux
 ```
 Then...
 
 ```bash
 pip install -r requirements.txt
+
+set GH_TOKEN=<github personal access token>
+python -m pyghub.cli get_repo -o Microsoft -r Terminal
 ```
 
 ## Usage
