@@ -22,6 +22,10 @@ pip install -r requirements.txt
 ```
 
 ## Usage
+### From the Command Line:
+To invoke Pyghub directly from a command line, see [CLI.md](CLI.md).
+
+### As a Python Module
 ```python
 from pyghub.providers.github import Github
 from pyghub.providers.git import Git
