@@ -27,10 +27,12 @@ set PYTHONPATH=%PYTHONPATH%;c:\git\pyghub\output
 ## Usage
 gh-cli.exe should reside in the directory we added to PYTHONPATH above (output) and can be called like any executable.
 ```bash
-# Get information on a repo you like
+# Through the python interpeter
+python -m pyghub.cli get_repo -o jayspang -r SmartTiles
+
+# Or via gh-cli.exe
 gh-cli get_repo -o Microsoft -r Terminal
 
 # Clone it to a local path
-gh-cli clone_repo -r https://github.com/microsoft/terminal.git -p c:\git\Ter
-minal
+gh-cli clone_repo -r https://github.com/microsoft/terminal.git -p c:\git\Terminal
 ```
