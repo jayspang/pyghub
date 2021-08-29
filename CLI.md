@@ -1,6 +1,6 @@
 # Pyghub CLI
 
-Pybhub is designed to run from either a Python script or the CLI. By installing the package with `pip`, we can run `gh-cli` as if it were a locally installed executable.
+Pybhub is designed to run from either a Python script or the CLI. By installing the package with `pip`, we can run `pyghub` as if it were a locally installed executable.
 
 
 ## Prerequisites
@@ -25,14 +25,14 @@ set PYTHONPATH=%PYTHONPATH%;c:\git\pyghub\output
 ```
 
 ## Usage
-gh-cli.exe should reside in the directory we added to PYTHONPATH above (output) and can be called like any executable.
+pyghub.exe should reside in the directory we added to PYTHONPATH above (output) and can be called like any executable.
 ```bash
 # Through the python interpeter
 python -m pyghub.cli get_repo -o jayspang -r SmartTiles
 
-# Or via gh-cli.exe
-gh-cli get_repo -o Microsoft -r Terminal
+# Or via pyghub.exe
+pyghub get_repo -o Microsoft -r Terminal
 
 # Clone it to a local path
-gh-cli clone_repo -r https://github.com/microsoft/terminal.git -p c:\git\Terminal
+pyghub clone_repo -r https://github.com/microsoft/terminal.git -p c:\git\Terminal
 ```
