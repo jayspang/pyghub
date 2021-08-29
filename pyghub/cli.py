@@ -2,6 +2,7 @@
 Exposes a command line interface for the Github module.
 """
 import argparse
+import os
 import sys
 from typing import Callable, List
 import pyghub.commands.get_repo
@@ -32,6 +33,10 @@ def main():
         command_parser(subparsers)
 
     args = parser.parse_args()
+
+    if not 'func' in args:
+        parser.print_help()
+        sys.exit(-1)
 
     #  Execute the desired command and exit with its return code
     exit_code = args.func(args)

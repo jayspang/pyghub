@@ -20,19 +20,23 @@ Then...
 ```bash
 # Install pyghub to the 'output' dir
 pip install -e . -t output
-# Add that dir to the PYTHONPATH env var
-set PYTHONPATH=%PYTHONPATH%;c:\git\pyghub\output
+
+# Add your project dir to the PYTHONPATH env var
+set PYTHONPATH=%PYTHONPATH%;c:\git\pyghub
+
+# Add the output dir to your PATH
+set PATH=%PATH%;c:\git\pyghub\output
 ```
 
 ## Usage
 pyghub.exe should reside in the directory we added to PYTHONPATH above (output) and can be called like any executable.
 ```bash
-# Through the python interpeter
-python -m pyghub.cli get_repo -o jayspang -r SmartTiles
+# Clone a repo
+pyghub clone_repo -r https://github.com/microsoft/terminal.git -p c:\git\Terminal
 
-# Or via pyghub.exe
+# Or just get some information on it (requires a github access token)
+set GH_TOKEN=<your github access token>
 pyghub get_repo -o Microsoft -r Terminal
 
-# Clone it to a local path
-pyghub clone_repo -r https://github.com/microsoft/terminal.git -p c:\git\Terminal
+
 ```
